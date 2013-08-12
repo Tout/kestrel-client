@@ -146,6 +146,14 @@ module Kestrel
       get queue, :peek => true
     end
 
+    def quit
+      [@read_client, @write_client].map(&:quit)
+    end
+
+    def reset
+      [@read_client, @write_client].map { |c| c.reset(servers[rand(@server_count)])}
+    end
+
     private
 
     def extract_kestrel_options!(opts)
